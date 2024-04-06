@@ -7,16 +7,23 @@ const shelljs = require("shelljs");
 const config = require("./config.json");
 const { Client, LocalAuth } = require("whatsapp-web.js");
 
-process.title = "whatsapp-node-api";
+process.title = "tratando de que funcione";
 global.client = new Client({
   authStrategy: new LocalAuth(),
+  // proxyAuthentication: { username: 'username', password: 'password' },
   puppeteer: {
+    // args: ['--proxy-server=proxy-server-that-requires-authentication.example.com'],
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      '--unhandled-rejections=strict'
+      '--disable-dev-shm-usage',
+      '--disable-accelerated-2d-canvas',
+      '--no-first-run',
+      '--no-zygote',
+      '--single-process', // <- this one doesn't works in Windows
+      '--disable-gpu'
     ],
-    headless: true ,
+    headless: true,
   },
   webVersion: '2.2409.2',
   webVersionCache: {
