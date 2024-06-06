@@ -9,26 +9,16 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 
 process.title = "tratando de que funcione";
 global.client = new Client({
-  authStrategy: new LocalAuth(),
-  // proxyAuthentication: { username: 'username', password: 'password' },
-  puppeteer: {
-    // args: ['--proxy-server=proxy-server-that-requires-authentication.example.com'],
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-dev-shm-usage',
-      '--disable-accelerated-2d-canvas',
-      '--no-first-run',
-      '--no-zygote',
-      '--single-process', // <- this one doesn't works in Windows
-      '--disable-gpu'
-    ],
-    headless: true,
-  },
-  webVersion: '2.2409.2',
+  authStrategy: new LocalAuth,
+  webVersion: "2.2412.54",
   webVersionCache: {
-    type: 'remote',
-    remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2409.2.html'
+    type: "remote",
+    remotePath:
+        "https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html",
+  },
+  puppeteer: {
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
   }
 });
 
