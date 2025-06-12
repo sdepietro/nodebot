@@ -2,6 +2,8 @@ const wppconnect = require('@wppconnect-team/wppconnect');
 const express = require("express");
 const bodyParser = require("body-parser");
 const config = require("./config.json");
+const crypto = require('crypto');
+const dayjs = require('dayjs');
 
 process.title = "tratando de que funcione";
 global.client = null;
@@ -72,7 +74,15 @@ app.get("/status", async (req, res) => {
 });
 
 // ✅ Endpoint: Reiniciar cliente manualmente
-app.post("/restart", async (req, res) => {
+app.get("/restart", async (req, res) => {
+    const { token } = req.query;
+    const today = dayjs().format('YYYYMMDD');
+    const expectedHash = crypto.createHash('md5').update(`woopi${today}`).digest('hex');
+
+    if (!token || token !== expectedHash) {
+        return res.status(401).json({ error: 'Token inválido' });
+    }
+
     try {
         if (global.client) {
             const browser = global.client.getBrowser?.();
